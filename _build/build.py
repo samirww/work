@@ -31,6 +31,9 @@ SITES = [
  dict(slug="dfordiva", shot="13-dfordiva.jpg", x=270, name="DforDiva", kind="Jewellery brand launch page",
       url="https://dfordiva.com",
       desc="Pre-launch page for a gold-plated accessories brand. Dark, golden atmosphere with a private preview gate ahead of the store opening."),
+ dict(slug="lamma-catering", shot="14-lamma.jpg", x=150, name="Lamma Catering", kind="Catering company website",
+      url="https://lammacatering.ca",
+      desc="Website and online ordering for a catering company in Kingston, Ontario. Warm dark-green and gold look with serif headlines, five kitchens in one order flow, menus and a quote form."),
  dict(slug="organic-sano", shot="06-organic-sano.jpg", x=135, name="Organic Sano", kind="Organic kitchen website",
       url="https://organicsano.com",
       desc="Website and online ordering for an organic kitchen in Dubai. Warm, natural look with handwritten headlines, plus meal plans, catering and gift vouchers."),
@@ -86,6 +89,8 @@ footer{{margin-top:44px;font-size:13px;color:#8a8479}}
 shots = sys.argv[1]
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 for s in SITES:
+    if not os.path.exists(os.path.join(shots, s["shot"])):
+        continue  # no new screenshot supplied: keep the page already built
     d = os.path.join(root, s["slug"]); os.makedirs(d, exist_ok=True)
     im = Image.open(os.path.join(shots, s["shot"])).convert("RGB")
     im.save(os.path.join(d, "shot.jpg"), quality=86, optimize=True)
