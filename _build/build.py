@@ -31,6 +31,9 @@ SITES = [
  dict(slug="dfordiva", shot="13-dfordiva.jpg", x=270, name="DforDiva", kind="Jewellery brand launch page",
       url="https://dfordiva.com",
       desc="Pre-launch page for a gold-plated accessories brand. Dark, golden atmosphere with a private preview gate ahead of the store opening."),
+ dict(slug="organic-sano", shot="06-organic-sano.jpg", x=135, name="Organic Sano", kind="Organic kitchen website",
+      url="https://organicsano.com",
+      desc="Website and online ordering for an organic kitchen in Dubai. Warm, natural look with handwritten headlines, plus meal plans, catering and gift vouchers."),
 ]
 TPL = """<!DOCTYPE html>
 <html lang="en">
@@ -74,7 +77,7 @@ footer{{margin-top:44px;font-size:13px;color:#8a8479}}
 <h1>{name}</h1>
 <p>{desc}</p>
 <a class="btn" href="{url}" rel="noopener">Visit live site</a>
-<div class="frame"><div class="bar"><i></i><i></i><i></i></div><a href="{url}" rel="noopener"><img src="shot.jpg" width="1440" height="900" alt="{name} website home page"></a></div>
+<div class="frame"><div class="bar"><i></i><i></i><i></i></div><a href="{url}" rel="noopener"><img src="shot.jpg" width="{w}" height="{h}" alt="{name} website home page"></a></div>
 <footer>Art direction, design and build: Samir Wehbe, Senior Art Director.</footer>
 </main>
 </body>
@@ -95,7 +98,7 @@ for s in SITES:
         sq = im.crop((s["x"], 0, s["x"]+h, h)).resize((1200, 1200), Image.LANCZOS)
     sq.save(os.path.join(d, "og.jpg"), quality=86, optimize=True)
     esc = {k: html.escape(str(v), quote=True) for k, v in s.items()}
-    open(os.path.join(d, "index.html"), "w").write(TPL.format(base=BASE, **esc))
+    open(os.path.join(d, "index.html"), "w").write(TPL.format(base=BASE, w=w, h=h, **esc))
     print("built", s["slug"])
 
 links = "\n".join(f'<a href="{s["slug"]}/">{html.escape(s["name"])}, {html.escape(s["kind"].lower())}</a>' for s in SITES)
